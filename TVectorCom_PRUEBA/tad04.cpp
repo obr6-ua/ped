@@ -2,26 +2,32 @@
 
 using namespace std;
 
-#include "tcomplejo.h"
+#include "tvectorcom.h"
 
 int
 main(void)
 {
-  TComplejo a;
-  TComplejo b(a);
-  TComplejo c;
-  c = a;
-  
+  int i;
+  TVectorCom a(100);
+  TVectorCom b;
+
+  for(i = 1; i<= 100; i++)
+  {
+    a[i] = 1;
+  }
+
   if(a == b)
     cout << "SI" << endl;
   else
     cout << "NO" << endl;
 
-  if(a == c)
+  if(a != b)
     cout << "SI" << endl;
   else
     cout << "NO" << endl;
 
-
   return 0;
+
 }
+
+
