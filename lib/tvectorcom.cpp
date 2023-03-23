@@ -22,8 +22,8 @@ TVectorCom::TVectorCom(const TVectorCom &v){
         this->tamano = 0;
     }
     else{
-        this->tamano = tamano;
-        this->c = new TComplejo [tamano];
+        this->tamano = v.tamano;
+        this->c = new TComplejo [v.tamano];
     }
     for(int i=0;i<tamano;i++){
         this->c[i] = v.c[i];
@@ -114,9 +114,16 @@ bool TVectorCom::ExisteCom(const TComplejo &c){
 }
 
 void TVectorCom::MostrarComplejos(double re){
+    cout << "[";
     for(int i=0; i<tamano;i++){
-        if(this->c[i].Re() >= re) cout << this->c[i] << endl;
+        if(this->c[i].Re() >= re){
+            cout  << this->c[i];
+            if(i != tamano -1){
+                cout << ", ";
+            }
+        } 
     }
+    cout << "]" << endl;
 }
 
 bool TVectorCom::Redimensionar(int tam){
@@ -136,13 +143,10 @@ bool TVectorCom::Redimensionar(int tam){
 }
 
 ostream & operator<<(ostream &s,const TVectorCom &v){
-    s << "[(1) " << v.c[0] <<", ";
-    if(v.tamano >2){
-        for(int i=2;i<=v.tamano-1; i++){
-            s << "(" << i << ") " << v.c[i-1] <<", "; 
-        }
+    s << "[";
+    for(int i=0;i<v.tamano-1; i++){
+        s << "(" << i + 1 << ") " << v.c[i] <<", "; 
     }
-
     s << "("<<v.tamano << ") " << v.c[v.tamano-1] << "]";
     return s;
 }
