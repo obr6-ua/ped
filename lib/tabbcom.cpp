@@ -67,12 +67,13 @@ using namespace std;
 
     // Devuelve TRUE si el árbol está vacío, FALSE en caso contrario
     bool TABBCom::EsVacio() const{
-        return (this->Raiz() == NULL) ? true : false; 
+        TComplejo t;
+        return (this->Raiz() == t) ? true : false; 
     }
 
     // Inserta el elemento en el árbol
     bool TABBCom::Insertar(const TComplejo &com){
-        if(EsVacio){
+        if(EsVacio()){
             this->nodo->item = com;
             return true;
         }

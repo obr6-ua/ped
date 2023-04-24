@@ -4,26 +4,8 @@
 #include "tvectorcom.h"
 #include <queue>
 
-class TABBCom;
 
-class TNodoABB{
-    private:
-        // El elemento del nodo
-        TComplejo item;
-        // Subárbol izquierdo y derecho
-        TABBCom iz, de;
-
-    public:
-        friend class TABBCom;
-        // Constructor por defecto
-        TNodoABB ();
-        // Constructor de copia
-        TNodoABB (const TNodoABB &);
-        // Destructor
-        ~TNodoABB ();
-        // Sobrecarga del operador asignación
-        TNodoABB & operator=(const TNodoABB &);
-};
+class TNodoABB;
 
 class TABBCom{
 
@@ -78,6 +60,25 @@ class TABBCom{
         TVectorCom Niveles();
         // Sobrecarga del operador salida
         friend ostream & operator<<(ostream &, TABBCom &);
+};
+
+class TNodoABB{
+    private:
+        // El elemento del nodo
+        TComplejo item;
+        // Subárbol izquierdo y derecho
+        TABBCom iz, de;
+
+    public:
+        friend class TABBCom;
+        // Constructor por defecto
+        TNodoABB ();
+        // Constructor de copia
+        TNodoABB (const TNodoABB &);
+        // Destructor
+        ~TNodoABB ();
+        // Sobrecarga del operador asignación
+        TNodoABB & operator=(const TNodoABB &);
 };
 
 #endif
