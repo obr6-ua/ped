@@ -3,10 +3,10 @@
 #
 
 #Si tus ficheros de prueba no comienzan por "tad", cambia "tad*.cpp" por el prefijo de tus ficheros, por ejemplo "prueba*.cpp":
-for FILE in *PRUEBA/tad*.cpp ; do 
+for FILE in *PRUEBA/TAB*.cpp ; do 
 	echo "Evaluando $FILE"
 	
-	cp $FILE src/tad.cpp 
+	cp $FILE tad.cpp 
         rm -f ./tad
 	make
 	./tad > $FILE.out

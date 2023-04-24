@@ -15,7 +15,7 @@ TComplejo::TComplejo(double re , double im){
     this->im = im;
 }
 
-TComplejo::TComplejo(TComplejo& c){
+TComplejo::TComplejo(const TComplejo& c){
     this->re = c.re;
     this->im = c.im;
 }
@@ -25,28 +25,41 @@ TComplejo::~TComplejo(){
     this->re = 0; 
 }
 
-TComplejo& TComplejo::operator=(TComplejo &c){
-    //Si no apuntan a la misma direccion de memoria , es decir que no sean el mismo objeto , entonces 
+TComplejo& TComplejo::operator=(const TComplejo &c){
+    
     if(this != &c){
-        (*this).~TComplejo(); //No sería necesario en esta ocasion ya que no liberamos memoria en el destructor y solo estamos reasignando
+        (*this).~TComplejo();
         this->re = c.re;
         this->im = c.im;
     }
     return *this;
 }
 
-TComplejo TComplejo::operator+(TComplejo &c){
+TComplejo operator+(double re, const TComplejo& c){
+    TComplejo *t = new TComplejo(re + c.re, c.im);
+    return *t;
+}
+TComplejo operator-(double re, const TComplejo& c){
+    TComplejo *t = new TComplejo(c.re - re,c.im);
+    return *t;
+}
+TComplejo operator*(double re, const TComplejo& c){
+    TComplejo *t = new TComplejo(c.re * c.re, c.im);
+    return *t;
+}
+
+TComplejo TComplejo::operator+(const TComplejo &c) {
     TComplejo *t = new TComplejo(c.re + this->re, this->im + c.im);
     return *t;
 }
 
-TComplejo TComplejo::operator-(TComplejo &c){
+TComplejo TComplejo::operator-(const TComplejo &c){
     TComplejo *t = new TComplejo(this->re - c.re, this->im - c.im);
     return *t;
 }
 
-TComplejo TComplejo::operator*(TComplejo &c){
-    TComplejo *t = new TComplejo(this->re * c.re, this->im * c.im);
+TComplejo TComplejo::operator*(const TComplejo &c){
+    TComplejo *t = new TComplejo(this->re * c.re + this->im* c.im * -1,this->im * c.re + this->re * c.im);
     return *t;
 }
 
@@ -66,41 +79,41 @@ TComplejo TComplejo::operator*(double re){
 }
 
 bool TComplejo::operator==(const TComplejo &c){
-    if(this->im == c.im && this->re == re){
+    if(this->re == c.re && this->im == c.im){
         return true;
     }
     return false;
 }
 
 bool TComplejo::operator!=(const TComplejo& c){
-    return !(this==&c);
+    return !(*(this)==c);
 } 
 
-double TComplejo::Re(){
+double TComplejo::Re() const{
     return re;
 }
 
-double TComplejo::Im(){
+double TComplejo::Im() const{
     return im;
 }
 
-void TComplejo::Re(double re){
+void TComplejo::Re(double re) {
     this->re = re;
 }
 
-void TComplejo::Im(double im){
+void TComplejo::Im(double im) {
     this->im = im;
 }
 
 double TComplejo::Arg(void){
-    return (double)sqrt(pow(re,2) + pow(im,2));
-}
-
-double TComplejo::Mod(void){
     return (double)atan2(im , re);
 }
 
-ostream& operator<<(ostream &s, TComplejo &c){
-    s << "(" << c.re << " " << c.im << ")";
+double TComplejo::Mod(void){
+    return (double)sqrt(pow(re,2) + pow(im,2));
+}
+
+ostream& operator<<(ostream &s, const TComplejo &c){
+    s << "(" << c.Re() << " " << c.Im() << ")";
     return s;
 }
