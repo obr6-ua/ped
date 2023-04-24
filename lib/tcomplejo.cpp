@@ -26,7 +26,11 @@ TComplejo::~TComplejo(){
 }
 
 TComplejo& TComplejo::operator=(const TComplejo &c){
+<<<<<<< HEAD
     
+=======
+    //Si no apuntan a la misma direccion de memoria , es decir que no sean el mismo objeto , entonces 
+>>>>>>> 10bbfd0e8cfccf2e2f2a9225b798f36c9f1adb14
     if(this != &c){
         (*this).~TComplejo();
         this->re = c.re;
