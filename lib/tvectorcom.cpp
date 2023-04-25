@@ -12,7 +12,7 @@ TVectorCom::TVectorCom(int tam){
     }
     else{
         this->tamano = tam;
-        this->c = new TComplejo [tam];
+        this->c = new TComplejo[tam];
     }
 }
 

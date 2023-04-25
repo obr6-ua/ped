@@ -2,26 +2,19 @@
 
 using namespace std;
 
-#include "tvectorcom.h"
-
-void
-funcion(TVectorCom b)
-{
-  cout << "b: " << b << endl;
-}
+#include "tcomplejo.h"
 
 int
 main(void)
 {
+  TComplejo a;
+  TComplejo b(a);
 
-  TVectorCom a(2);
+  b.~TComplejo();
 
-  a[1]= 1;
-  cout << "a: " << a << endl;
-  funcion(a);
+
+  cout << a << " " << b << endl;
 
   return 0;
-
 }
-
 

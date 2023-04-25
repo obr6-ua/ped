@@ -20,6 +20,8 @@ class TABBCom{
         void PostordenAux(TVectorCom &, int &);
         //Devuelve TRUE si es mayor que el item de dicho nodo
         bool EsMayor(const TComplejo &);
+        
+        void Copiar(const TABBCom &);
 
     public:
         friend class TNodoABB;

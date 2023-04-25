@@ -4,10 +4,6 @@ using namespace std;
 
     // Constructor por defecto
     TNodoABB::TNodoABB (){
-        this->item = TComplejo();
-        this->iz = TABBCom();
-        this->de = TABBCom();
-
     }
     // Constructor de copia
     TNodoABB::TNodoABB (const TNodoABB &tnodoabb){
@@ -17,18 +13,15 @@ using namespace std;
     }
     // Destructor
     TNodoABB::~TNodoABB (){
-            this->item.~TComplejo();
-            this->de.~TABBCom();
-            this->iz.~TABBCom();
     }
     // Sobrecarga del operador asignación
     TNodoABB & TNodoABB::operator=(const TNodoABB &tnodoabb){
         if(this != &tnodoabb){
             (*this).~TNodoABB();
-            this->de = tnodoabb.de;
-            this->iz = tnodoabb.iz;
-            this->item = tnodoabb.item; 
         }
+        this->de = tnodoabb.de;
+        this->iz = tnodoabb.iz;
+        this->item = tnodoabb.item; 
         return *this;
     }
     // Constructor por defecto
@@ -37,21 +30,35 @@ using namespace std;
     }
     // Constructor de copia
     TABBCom::TABBCom (const TABBCom &tabbcom){
-        this->nodo->item = tabbcom.nodo->item;
-        this->nodo->de = tabbcom.nodo->de;
-        this->nodo->iz = tabbcom.nodo->iz;
+        Copiar(tabbcom);   
     }
+
+    void TABBCom::Copiar(const TABBCom &origen) {
+	if (!origen.EsVacio()) {
+		this->nodo = new TNodoABB();
+		this->nodo->item = origen.nodo->item;
+		this->nodo->iz.Copiar(origen.nodo->iz);
+		this->nodo->de.Copiar(origen.nodo->de);
+	} else
+		this->nodo = NULL;
+    }
+
     // Destructor
     TABBCom::~TABBCom (){
-        delete [] this->nodo;
-        this->nodo = NULL;
+
     }
 
     // Sobrecarga del operador asignación
     TABBCom & TABBCom::operator=(const TABBCom &tabbcom){
-        this->nodo->item = tabbcom.nodo->item;
-        this->nodo->de = tabbcom.nodo->de;
-        this->nodo->iz = tabbcom.nodo->iz;
+        if(EsVacio()){
+            this->nodo = NULL;
+        }
+        else{
+            this->nodo->item = tabbcom.nodo->item;
+            this->nodo->de = tabbcom.nodo->de;
+            this->nodo->iz = tabbcom.nodo->iz;
+        }
+        
 
         return (*this);
     }
@@ -67,13 +74,16 @@ using namespace std;
 
     // Devuelve TRUE si el árbol está vacío, FALSE en caso contrario
     bool TABBCom::EsVacio() const{
-        TComplejo t;
-        return (this->Raiz() == t) ? true : false; 
+        if (this->nodo)
+		return false;
+	else
+		return true;
     }
 
     // Inserta el elemento en el árbol
     bool TABBCom::Insertar(const TComplejo &com){
         if(EsVacio()){
+            this->nodo = new TNodoABB();
             this->nodo->item = com;
             return true;
         }
@@ -128,7 +138,7 @@ using namespace std;
 
     // Devuelve el número de nodos del árbol (un árbol vacío posee 0 nodos)
     int TABBCom::Nodos() const{
-        return ((EsVacio() ? 0 : 1) + this->nodo->iz.Nodos() + this->nodo->de.Nodos());
+        return (EsVacio() ? 0 : 1 + this->nodo->iz.Nodos() + this->nodo->de.Nodos());
     }
 
     // Devuelve el número de nodos hoja en el árbol (la raíz puede ser nodo hoja)

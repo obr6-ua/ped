@@ -1,62 +1,46 @@
-/* Prueba:
-    - ALTURA, NODOS, NODOSHOJA   
-*/
-
 #include <iostream>
-#include "tabbcom.h"
-#include "tcomplejo.h"
-#include "tvectorcom.h"
+
 using namespace std;
+
+#include "tvectorcom.h"
 
 int
 main(void)
 {
+  TVectorCom a, b(3), c(5);
+  c[1] = 1;
+  c[2] = 2;
+  c[3] = 3;
+  c[4] = 4;
+  c[5] = 5;
+  c[6] = 6;
+  if(c.Redimensionar(0))
+	cout << "Redimensionado: " << c << endl;
+  else
+	cout << "No Redimensionado: " << c << endl;
 
-  
-  TABBCom a;
- 
-  TComplejo c100(100, 1);
-  TComplejo c50(50, 1);
-  TComplejo c20(20, 1);
-  TComplejo c110(110, 1);
- 
+  if(c.Redimensionar(5))
+	cout << "Redimensionado: " << c << endl;
+  else
+	cout << "No Redimensionado: " << c << endl;
 
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
+  if(c.Redimensionar(6))
+	cout << "Redimensionado: " << c << endl;
+  else
+	cout << "No Redimensionado: " << c << endl;
 
-  a.Insertar(c100);
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
+  if(c.Redimensionar(3))
+	cout << "Redimensionado: " << c << endl;
+  else
+	cout << "No Redimensionado: " << c << endl;
 
-  a.Insertar(c50);
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
+  if(a.Redimensionar(3))
+	cout << "Redimensionado: " << a << endl;
+  else
+	cout << "No Redimensionado: " << a << endl;
 
-  a.Insertar(c20);
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
-
-  a.Insertar(c110);
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
-
-  a.Borrar(c20);
-  cout <<"Altura: "<<a.Altura()<<endl;
-  cout <<"Nodos: "<<a.Nodos()<<endl;
-  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
-  cout <<"Raiz: "<<a.Raiz()<<endl;
-
-
-  return 1; 
+  return 0;
 
 }
+
+

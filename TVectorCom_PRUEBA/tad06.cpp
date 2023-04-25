@@ -2,25 +2,26 @@
 
 using namespace std;
 
-#include "tvectorcom.h"
-
+#include "tcomplejo.h"
 
 int
 main(void)
 {
-  TVectorCom a(3);
-  TComplejo res; 
+  TComplejo a(0, 0);
+  TComplejo b(1, 0), c(1, 1), d(0, 1);
+  TComplejo e(-1, 1), f(-1, 0);
+  TComplejo g(-1,-1), h(0, -1);
+  TComplejo i(1, -1);;
 
-  a[1] = 1; a[2] = 2; a[3] = 3;
-
-  res = a[0]; 
-  cout << "res: " << res << endl;
-  res = a[4]; 
-  cout << "res: " << res << endl;
-
+  cout << a.Re() << " " << a.Im() << endl;
+  cout << b.Re() << " " << b.Im() << endl;
+  cout << c.Re() << " " << c.Im() << endl;
+  cout << d.Re() << " " << d.Im() << endl;
+  cout << e.Re() << " " << e.Im() << endl;
+  cout << f.Re() << " " << f.Im() << endl;
+  cout << g.Re() << " " << g.Im() << endl;
+  cout << h.Re() << " " << h.Im() << endl;
+  cout << i.Re() << " " << i.Im() << endl;
 
   return 0;
-
 }
-
-
