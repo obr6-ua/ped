@@ -23,6 +23,7 @@ class TABBCom{
         
         void Copiar(const TABBCom &);
 
+        void Sustituir();
     public:
         friend class TNodoABB;
         // Constructor por defecto

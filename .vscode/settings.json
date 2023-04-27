@@ -11,6 +11,7 @@
         "*.tcc": "cpp",
         "limits": "cpp",
         "type_traits": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "queue": "cpp"
     }
 }

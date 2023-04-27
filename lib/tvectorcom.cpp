@@ -50,7 +50,7 @@ TVectorCom & TVectorCom::operator=(const TVectorCom &v){
             this->tamano = 0;
         }
         else{
-            this->tamano = tamano;
+            this->tamano = v.tamano;
             this->c = new TComplejo [tamano];
         }
         for(int i=0;i<tamano;i++){
@@ -159,9 +159,12 @@ bool TVectorCom::Redimensionar(int tam){
 
 ostream & operator<<(ostream &s,const TVectorCom &v){
     s << "[";
-    for(int i=0;i<v.tamano-1; i++){
-        s << "(" << i + 1 << ") " << v.c[i] <<", "; 
+    if(v.tamano>0){
+        for(int i=0;i<v.tamano-1; i++){
+            s << "(" << i + 1 << ") " << v.c[i] <<", "; 
+        }
+        s << "("<< v.tamano << ") " << v.c[v.tamano-1];
     }
-    s << "("<< v.tamano << ") " << v.c[v.tamano-1] << "]";
+    s << "]";
     return s;
 }

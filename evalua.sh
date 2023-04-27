@@ -6,7 +6,7 @@
 for FILE in *PRUEBA/TA*.cpp ; do 
 	echo "Evaluando $FILE"
 	
-	cp $FILE tad.cpp 
+	cp $FILE src/tad.cpp 
         rm -f ./tad
 	make
 	./tad > $FILE.out

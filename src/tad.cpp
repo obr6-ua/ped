@@ -1,5 +1,5 @@
 /* Prueba:
-    - CONSTR. COPIA , "=" ; posible copia de punteros 
+    - ALTURA, NODOS, NODOSHOJA   
 */
 
 #include <iostream>
@@ -12,27 +12,51 @@ int
 main(void)
 {
 
+  
   TABBCom a;
+ 
+  TComplejo c100(100, 1);
+  TComplejo c50(50, 1);
+  TComplejo c20(20, 1);
+  TComplejo c110(110, 1);
+ 
 
-  TComplejo c1(1), c2(2, 3);
+  cout <<"Altura: "<<a.Altura()<<endl;
+  cout <<"Nodos: "<<a.Nodos()<<endl;
+  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
+  cout <<"Raiz: "<<a.Raiz()<<endl;
 
-  a.Insertar(c1);
+  a.Insertar(c100);
+  cout <<"Altura: "<<a.Altura()<<endl;
+  cout <<"Nodos: "<<a.Nodos()<<endl;
+  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
+  cout <<"Raiz: "<<a.Raiz()<<endl;
 
-  TABBCom b(a), c;
-  c=b;
+  a.Insertar(c50);
+  cout <<"Altura: "<<a.Altura()<<endl;
+  cout <<"Nodos: "<<a.Nodos()<<endl;
+  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
+  cout <<"Raiz: "<<a.Raiz()<<endl;
 
-  a.Insertar(c2);
-  if( a.Inorden() == b.Inorden() )
-        cout << "MAL! SE HAN COPIADO PUNTEROS" << endl;
-  else
-	cout << "CORRECTO CONSTRUCTOR DE COPIA" << endl;
+  a.Insertar(c20);
+  cout <<"Altura: "<<a.Altura()<<endl;
+  cout <<"Nodos: "<<a.Nodos()<<endl;
+  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
+  cout <<"Raiz: "<<a.Raiz()<<endl;
+
+  a.Insertar(c110);
+  cout <<"Altura: "<<a.Altura()<<endl;
+  cout <<"Nodos: "<<a.Nodos()<<endl;
+  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
+  cout <<"Raiz: "<<a.Raiz()<<endl;
+
+  a.Borrar(c20);
+  cout <<"Altura: "<<a.Altura()<<endl;
+  cout <<"Nodos: "<<a.Nodos()<<endl;
+  cout <<"NodosHoja: "<<a.NodosHoja()<<endl;
+  cout <<"Raiz: "<<a.Raiz()<<endl;
 
 
-  b.Insertar(c2);
-  if( b.Inorden() == c.Inorden() )
-        cout << "MAL! SE HAN COPIADO PUNTEROS" << endl;
-  else
-	cout << "CORRECTA ASIGNACION" << endl;
+  return 1; 
 
-  return 1;
 }
