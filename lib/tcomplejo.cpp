@@ -35,47 +35,40 @@ TComplejo& TComplejo::operator=(const TComplejo &c){
     return *this;
 }
 
-TComplejo operator+(double re, const TComplejo& c){
-    TComplejo *t = new TComplejo(re + c.re, c.im);
-    return *t;
-}
-TComplejo operator-(double re, const TComplejo& c){
-    TComplejo *t = new TComplejo(c.re - re,c.im);
-    return *t;
-}
-TComplejo operator*(double re, const TComplejo& c){
-    TComplejo *t = new TComplejo(c.re * c.re, c.im);
-    return *t;
+TComplejo operator+(double d, const TComplejo &c) {
+	return TComplejo(d) + c;
 }
 
-TComplejo TComplejo::operator+(const TComplejo &c) {
-    TComplejo *t = new TComplejo(c.re + this->re, this->im + c.im);
-    return *t;
+TComplejo operator-(double d, const TComplejo &c) {
+	return TComplejo(d) - c;
 }
 
-TComplejo TComplejo::operator-(const TComplejo &c){
-    TComplejo *t = new TComplejo(this->re - c.re, this->im - c.im);
-    return *t;
+TComplejo operator*(double d, const TComplejo &c) {
+	return TComplejo(d) * c;
 }
 
-TComplejo TComplejo::operator*(const TComplejo &c){
-    TComplejo *t = new TComplejo(this->re * c.re + this->im* c.im * -1,this->im * c.re + this->re * c.im);
-    return *t;
+TComplejo TComplejo::operator+(const TComplejo &c)  {
+	return TComplejo(re + c.re ,im + c.im);
 }
 
-TComplejo TComplejo::operator+(double re){
-    TComplejo *t = new TComplejo(re + this->re, this->im);
-    return *t;
+TComplejo TComplejo::operator-(const TComplejo &c)  {
+	return TComplejo(re - c.re , im - c.im);
 }
 
-TComplejo TComplejo::operator-(double re){
-    TComplejo *t = new TComplejo(this->re - re, this->im);
-    return *t;
+TComplejo TComplejo::operator*(const TComplejo &c)  {
+	return TComplejo(((re * c.re) - (im * c.im)),((re * c.im) + (im * c.re)));
 }
 
-TComplejo TComplejo::operator*(double re){
-    TComplejo *t = new TComplejo(re * this->re, this->im);
-    return *t;
+TComplejo TComplejo::operator+(double d)  {
+	return *this + TComplejo(d);
+}
+
+TComplejo TComplejo::operator-(double d)  {
+	return *this - TComplejo(d);
+}
+
+TComplejo TComplejo::operator*(double d)  {
+	return *this * TComplejo(d);
 }
 
 bool TComplejo::operator==(const TComplejo &c){
@@ -86,7 +79,7 @@ bool TComplejo::operator==(const TComplejo &c){
 }
 
 bool TComplejo::operator!=(const TComplejo& c){
-    return !(*(this)==c);
+    return !(*this==c);
 } 
 
 double TComplejo::Re() const{

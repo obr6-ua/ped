@@ -138,7 +138,10 @@ using namespace std;
 
     // Devuelve el número de nodos del árbol (un árbol vacío posee 0 nodos)
     int TABBCom::Nodos() const{
-        return (EsVacio() ? 0 : 1 + this->nodo->iz.Nodos() + this->nodo->de.Nodos());
+        if (this->nodo)
+            return false;
+        else
+            return true;
     }
 
     // Devuelve el número de nodos hoja en el árbol (la raíz puede ser nodo hoja)
