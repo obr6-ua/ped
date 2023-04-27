@@ -20,8 +20,9 @@ using namespace std;
             (*this).~TNodoABB();
         }
         this->de = tnodoabb.de;
-        this->iz = tnodoabb.iz;
         this->item = tnodoabb.item; 
+        this->iz = tnodoabb.iz;
+        
         return *this;
     }
     // Constructor por defecto
@@ -37,6 +38,7 @@ using namespace std;
 	if (!origen.EsVacio()) {
 		this->nodo = new TNodoABB();
 		this->nodo->item = origen.nodo->item;
+
 		this->nodo->iz.Copiar(origen.nodo->iz);
 		this->nodo->de.Copiar(origen.nodo->de);
 	} else
@@ -45,20 +47,21 @@ using namespace std;
 
     // Destructor
     TABBCom::~TABBCom (){
+        while (!this->EsVacio()) {
+            this->nodo->iz.~TABBCom();
+            this->nodo->de.~TABBCom();
 
+            delete this->nodo;
+            this->nodo = NULL;
+        }
     }
 
     // Sobrecarga del operador asignación
     TABBCom & TABBCom::operator=(const TABBCom &tabbcom){
-        if(EsVacio()){
-            this->nodo = NULL;
+        if(!EsVacio()){
+            this->~TABBCom();
         }
-        else{
-            this->nodo->item = tabbcom.nodo->item;
-            this->nodo->de = tabbcom.nodo->de;
-            this->nodo->iz = tabbcom.nodo->iz;
-        }
-        
+        this->Copiar(tabbcom);
 
         return (*this);
     }
