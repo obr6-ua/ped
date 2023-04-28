@@ -102,7 +102,7 @@ double TComplejo::Arg(void){
     return (double)atan2(im , re);
 }
 
-double TComplejo::Mod(void){
+double TComplejo::Mod(void) const{
     return (double)sqrt(pow(re,2) + pow(im,2));
 }
 

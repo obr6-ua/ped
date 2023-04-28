@@ -72,7 +72,13 @@ using namespace std;
     }
     //Devuelve TRUE si es mayor que el item de dicho nodo
     bool TABBCom::EsMayor(const TComplejo &com){
-        return (this->Raiz().Re() > com.Re()) ? true : false;
+        TNodoABB *tnodo = new TNodoABB();
+        tnodo->item = com;
+
+        return (tnodo->item == nodo->item
+        || com.Mod() < nodo->item.Mod() 
+        || com.Re() < nodo->item.Re() 
+        || com.Im() < nodo->item.Im()) ? false : true;
     }
 
     // Devuelve TRUE si el árbol está vacío, FALSE en caso contrario
@@ -102,113 +108,91 @@ using namespace std;
     }
     // Borra el elemento en el árbol
     bool TABBCom::Borrar(const TComplejo &com){
-        // if(Buscar(com)){
-        //     if(this->Raiz() == com){
-        //         this->~TABBCom();
-        //         return true;
-        //     }
-        //     else if(Buscar(this->nodo->de.Raiz())){
-        //         return this->Borrar(this->nodo->de.Raiz());
-        //     }
-        //     else if(Buscar(this->nodo->iz.Raiz())){
-        //         return this->Borrar(this->nodo->iz.Raiz());
-        //     }
-        // }
-        // return false;
         bool borrado = false;
+        TNodoABB *aux;
+        if (this->Buscar(com)) {
+            if (this->nodo->item == com) {
+                if (this->nodo->iz.EsVacio() && this->nodo->de.EsVacio()) {
+                    delete nodo;
+                    nodo = NULL;
+                    borrado = true;
+                } else {
+                    if (this->nodo->iz.EsVacio() || this->nodo->de.EsVacio()) {
+                        if (this->nodo->iz.EsVacio()) { //Sin subarbol izq
+                            aux = nodo;
+                            nodo = nodo->de.nodo;
+                            aux->de.nodo = NULL;
+                            delete aux;
+                            aux = NULL;
 
-	if (this->Buscar(com)) {
-		if (this->nodo->item == com) {
-			if (this->nodo->iz.EsVacio() && this->nodo->de.EsVacio()) {
-				delete nodo;
-				nodo = NULL;
+                            borrado = true;
+                        } else { //Sin subarbol der
+                            aux = nodo;
+                            nodo = nodo->iz.nodo;
+                            aux->iz.nodo = NULL;
+                            delete aux;
+                            aux = NULL;
 
-				borrado = true;
-			} else {
-				if (this->nodo->iz.EsVacio() || this->nodo->de.EsVacio()) {
-					if (this->nodo->iz.EsVacio()) { //Sin subarbol izq
-						TNodoABB *aux;
+                            borrado = true;
+                        }
+                    } else { //Cuando tiene dos subarboles hijo.
+                        Sustituir();
 
-						aux = nodo;
-						nodo = nodo->de.nodo;
-						aux->de.nodo = NULL;
-						delete aux;
-						aux = NULL;
+                        borrado = true;
+                    }
+                }
 
-						borrado = true;
-					} else { //Sin subarbol der
-						TNodoABB *aux;
+                borrado = true;
+            } else {
+                if (EsMayor(com))
+                    borrado = this->nodo->de.Borrar(com);
+                else
+                    borrado = this->nodo->iz.Borrar(com);
+            }
+        }
 
-						aux = nodo;
-						nodo = nodo->iz.nodo;
-						aux->iz.nodo = NULL;
-						delete aux;
-						aux = NULL;
-
-						borrado = true;
-					}
-				} else { //Cuando tiene dos subarboles hijo.
-					this->Sustituir();
-
-					borrado = true;
-				}
-			}
-
-			borrado = true;
-		} else {
-			if (this->EsMayor(com))
-				borrado = this->nodo->de.Borrar(com);
-			else
-				borrado = this->nodo->iz.Borrar(com);
-		}
-	}
-
-	return borrado;
+        return borrado;
     }
 
     void TABBCom::Sustituir() {
-        TNodoABB *anterior, *posterior, *actual;
-
-        actual = this->nodo;
-        posterior = this->nodo->iz.nodo; //Tenemos que sustituir por algun nodo del subarbol iz
-        anterior = this->nodo;
-
-        if (posterior->de.EsVacio()) { //No hay subarbol der por lo tanto este es el mayor.
-            actual->item = posterior->item;
-            actual->iz.nodo = posterior->iz.nodo;
-        } else { //Buscamos iterativamente el mayor de la ezquierda (estara en una hoja lo mas a la derecha posible).
-            while (!posterior->de.EsVacio()) {
-                anterior = posterior;
-                posterior = posterior->de.nodo;
-            }
-
-            anterior->de.nodo = posterior->iz.nodo;
-            actual->item = posterior->item;
+        TNodoABB *anterior = nodo, *posterior = nodo->iz.nodo;
+        while (!posterior->de.EsVacio()) {
+            anterior = posterior;
+            posterior = posterior->de.nodo;
         }
+        if (posterior->iz.EsVacio()) {
+            nodo->item = posterior->item;
+            if (anterior == nodo) {
+                nodo->iz = posterior->iz;
+            } else {
+                anterior->de = posterior->iz;
+            }
+        } else {
+            nodo->item = posterior->item;
+            anterior->de = posterior->iz;
+        }
+        delete posterior;
     }
 
     // Devuelve TRUE si el elemento está en el árbol, FALSE en caso contrario
-    bool TABBCom::Buscar(const TComplejo &tabbcom){
-        if(EsVacio()) return false;
-        if(this->Raiz() == tabbcom){
-            return true;
-        }
-        else if(this->nodo->de.Buscar(tabbcom) || this->nodo->de.Buscar(tabbcom)){
-            return true;
-        }
-        else{
+    bool TABBCom::Buscar(const TComplejo &com){
+        if (EsVacio()) {
             return false;
         }
+        if (this->nodo->item == com) {
+            return true;
+        }
+        return this->nodo->iz.Buscar(com) || this->nodo->de.Buscar(com);
     }
 
     // Devuelve el elemento en la raíz del árbol
     TComplejo TABBCom::Raiz() const{
-        return this->nodo->item;
+        return (EsVacio() ? TComplejo() : this->nodo->item);
     }
 
     // Devuelve la altura del árbol (la altura de un árbol vacío es 0)
     int TABBCom::Altura(){
-        return ((EsVacio() ? 0 : 1) + max(this->nodo->iz.Altura(), this->nodo->de.Altura()));
+        return (EsVacio() ? 0 : (1 + max(this->nodo->iz.Altura(), this->nodo->de.Altura())));
     }
 
     // Devuelve el número de nodos del árbol (un árbol vacío posee 0 nodos)
@@ -292,26 +276,31 @@ using namespace std;
         return v;
     }
 
+    
+
     // Devuelve el recorrido en niveles
     TVectorCom TABBCom::Niveles(){
         int i = 1;
-        queue<TABBCom> cola;
+        queue<TNodoABB*> cola;
         TVectorCom v(this->Nodos());
-
+        TNodoABB *tnodo = this->nodo;
         TABBCom abb = *this;
-        cola.push(abb);
+        cola.push(tnodo);
         
         while(!cola.empty()){
-            v[i] = abb.nodo->item;
-            abb = cola.front();
-            
-            if(!abb.nodo->iz.EsVacio())
-                cola.push(abb.nodo->iz);
+			TNodoABB *temp = cola.front();
+			v[i] = (*temp).item;
+			i++;
 
-            if(!abb.nodo->de.EsVacio())
-                cola.push(abb.nodo->de);
-            i++;
-        }
+			cola.pop();
+
+			if(!(*temp).iz.EsVacio()){
+				cola.push((*temp).iz.nodo);
+			}
+			if(!(*temp).de.EsVacio()){
+				cola.push((*temp).de.nodo);
+			}
+		}
         return v;
     }
     

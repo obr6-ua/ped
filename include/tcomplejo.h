@@ -38,7 +38,7 @@ class TComplejo {
         void Re(double)  ; // Modifica PARTE REAL
         void Im(double)  ; // Modifica PARTE IMAGINARIA
         double Arg(void); // Calcula el Argumento (en Radianes)
-        double Mod(void); // Calcula el Módulo
+        double Mod(void) const; // Calcula el Módulo
 
         // Sobrecarga del operador SALIDA
         friend ostream & operator<<(ostream &, const TComplejo &);
